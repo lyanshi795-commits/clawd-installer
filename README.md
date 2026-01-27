@@ -1,5 +1,7 @@
 # Clawdbot Auto-Deployer
 
+[![脚本体检](https://github.com/lyanshi795-commits/clawd-installer/actions/workflows/test.yml/badge.svg)](https://github.com/lyanshi795-commits/clawd-installer/actions/workflows/test.yml)
+
 一键部署你的私人 AI 代理 🤖
 
 ## 📁 项目结构

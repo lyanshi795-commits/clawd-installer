@@ -1,0 +1,38 @@
+name: 脚本体检中心 (Script Check)
+
+# 触发机制：每次 Push 代码或有人提交 PR 时运行
+on: [push, pull_request]
+
+jobs:
+  # 任务 1：语法检查 (防止低级错误)
+  shellcheck:
+    name: Shell语法扫描
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 运行 ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './'
+
+  # 任务 2：模拟运行测试 (证明脚本可执行)
+  dry-run-test:
+    name: 模拟执行测试
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 赋予执行权限
+        run: chmod +x *.sh lib/*.sh
+      - name: 语法完整性检查 (vibe-deploy.sh)
+        run: bash -n vibe-deploy.sh
+      - name: 语法完整性检查 (healthcheck.sh)
+        run: bash -n lib/healthcheck.sh
+
+  # 任务 3：macOS 兼容性测试
+  macos-test:
+    name: macOS 兼容性
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 检查脚本语法 (macOS)
+        run: bash -n vibe-deploy.sh
