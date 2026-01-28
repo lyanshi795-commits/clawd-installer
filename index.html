@@ -59,15 +59,15 @@
                 class="relative bg-slate-950 rounded-lg border border-slate-800 p-4 flex items-center justify-between code-glow">
                 <code
                     class="font-mono text-green-400 text-left text-sm md:text-base overflow-x-auto whitespace-nowrap mr-4">
-                    curl -fsSL https://raw.githubusercontent.com/lyanshi795-commits/clawd-installer/main/vibe-deploy.sh | bash
+                    curl -fsSL https://raw.githubusercontent.com/lyanshi795-commits/clawd-installer/main/deploy.sh | bash
                 </code>
-                <button onclick="copyCommand()"
+                <button onclick="copyCommand()" id="copy-btn"
                     class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-md text-sm font-medium transition flex items-center shrink-0 border border-slate-700">
-                    <i class="fa-regular fa-copy mr-2"></i> <span id="btn-text">复制指令</span>
+                    <i class="fa-regular fa-copy mr-2" id="copy-icon"></i> <span id="btn-text">复制指令</span>
                 </button>
             </div>
             <p class="mt-3 text-xs text-slate-500">
-                🔒 代码开源安全，不收集任何密钥。适合 Ubuntu 22.04+ 或 macOS。
+                ✅ Verified on Ubuntu 24.04 & Vultr $6/mo Plan · 🔒 开源安全，不收集任何密钥
             </p>
         </div>
 
@@ -144,14 +144,26 @@
 
     <script>
         function copyCommand() {
-            const command = "curl -fsSL https://raw.githubusercontent.com/lyanshi795-commits/clawd-installer/main/vibe-deploy.sh | bash";
+            const command = "curl -fsSL https://raw.githubusercontent.com/lyanshi795-commits/clawd-installer/main/deploy.sh | bash";
             navigator.clipboard.writeText(command);
 
-            const btn = document.getElementById('btn-text');
-            const originalText = btn.innerText;
-            btn.innerText = "已复制！";
+            const btn = document.getElementById('copy-btn');
+            const btnText = document.getElementById('btn-text');
+            const icon = document.getElementById('copy-icon');
+
+            // Flash green effect
+            btn.classList.remove('bg-slate-800', 'border-slate-700');
+            btn.classList.add('bg-green-600', 'border-green-500');
+            icon.classList.remove('fa-copy');
+            icon.classList.add('fa-check');
+            btnText.innerText = "Command Copied!";
+
             setTimeout(() => {
-                btn.innerText = originalText;
+                btn.classList.remove('bg-green-600', 'border-green-500');
+                btn.classList.add('bg-slate-800', 'border-slate-700');
+                icon.classList.remove('fa-check');
+                icon.classList.add('fa-copy');
+                btnText.innerText = "复制指令";
             }, 2000);
         }
     </script>
